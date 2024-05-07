@@ -1,311 +1,414 @@
-<h1>ExpNo 5 : Implement Minimax Search Algorithm for a Simple TIC-TAC-TOE game</h1> 
-<h3>Name: DINESH KARTHICK K J</h3>
-<h3>Register Number:212222100011</h3>
-<H3>Aim:</H3>
-<p>
-    Implement Minimax Search Algorithm for a Simple TIC-TAC-TOE game
-</p>
+# EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD
+## Aim: 
+To Interface a 4X4 matrix keypad and show the output on 16X2 LCD display to ARM controller , and simulate it in Proteus
+## Components required: 
+STM32 CUBE IDE, Proteus 8 simulator .
+## NAME : DINESH KARTHICK K J
+## REG NO : 212222100011
+## Theory:
 
-<H3>Theory and Procedure:</H3>
-To begin, let's start by defining what it means to play a perfect game of tic tac toe:
+![image](https://github.com/vasanthkumarch/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/36288975/2a4a795e-1674-4329-ae07-3f5e8d5073e2)
 
-If I play perfectly, every time I play I will either win the game, or I will draw the game. Furthermore if I play against another perfect player, I will always draw the game.
+4×4 Keypad Module Pin Diagram
+4x4 Keypad module Pin Diagram
+4×4 Keypad module Pin Diagram
+Pin Number	Pin Name	Description
+1	R1	Taken out from 1st  ROW
+2	R2	Taken out from 2nd  ROW
+3	R3	Taken out from 3rd  ROW
+4	R4	Taken out from 4th  ROW
+5	C1	Taken out from 1st  COLUMN
+6	C2	Taken out from 2nd COLUMN
+7	C3	Taken out from 3rd  COLUMN
+8	C4	Taken out from 4th  COLUMN
+4×4 Matrix Keypad Module Hardware Overview
+These Keypad modules are made of thin, flexible membrane material. The 4 x4 keypad module consists of 16 keys, these Keys are organized in a matrix of rows and columns. All these switches are connected to each other with a conductive trace. Normally there is no connection between rows and columns. When we will press a key, then a row and a column make contact.
 
-How might we describe these situations quantitatively? Let's assign a score to the "end game conditions:"
+## Procedure : 
+ ## LCD 16X2 
+   16×2 LCD is named so because; it has 16 Columns and 2 Rows. There are a lot of combinations available like,
+   8×1, 8×2, 10×2, 16×1, etc. But the most used one is the 16*2 LCD, hence we are using it here.
 
-I win, hurray! I get 10 points!
-I lose, shit. I lose 10 points (because the other player gets 10 points)
-I draw, whatever. I get zero points, nobody gets any points.
-So now we have a situation where we can determine a possible score for any game end state.
+All the above mentioned LCD display will have 16 Pins and the programming approach is also the same and hence the choice is left to you. 
+Below is the Pinout and Pin Description of 16x2 LCD Module:
 
-Looking at a Brief Example
-To apply this, let's take an example from near the end of a game, where it is my turn. I am X. My goal here, obviously, is to maximize my end game score.
+![image](https://user-images.githubusercontent.com/36288975/233858086-7b1a88a2-f941-475c-86c2-b3bae68bdf7e.png)
+![image](https://user-images.githubusercontent.com/36288975/233857710-541ac1c2-786c-4dfc-b7b5-e3a4868a9cb6.png)
+![image](https://user-images.githubusercontent.com/36288975/233857733-05df5dbf-1a1e-479e-85bb-8014a39ad878.png)
 
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/498656fc-79ce-4234-a623-06568bad8dda)
+4-bit and 8-bit Mode of LCD:
+
+The LCD can work in two different modes, namely the 4-bit mode and the 8-bit mode. In 4 bit mode we send the data nibble by nibble, first upper nibble and then lower nibble. For those of you who don’t know what a nibble is: a nibble is a group of four bits, so the lower four bits (D0-D3) of a byte form the lower nibble while the upper four bits (D4-D7) of a byte form the higher nibble. This enables us to send 8 bit data.
+
+Whereas in 8 bit mode we can send the 8-bit data directly in one stroke since we use all the 8 data lines.
+
+ 8-bit mode is faster and flawless than 4-bit mode. But the major drawback is that it needs 8 data lines connected to the microcontroller. This will make us run out of I/O pins on our MCU, so 4-bit mode is widely used. No control pins are used to set these modes. 
+ LCD Commands:
+
+There are some preset commands instructions in LCD, which we need to send to LCD through some microcontroller. Some important command instructions are given below:
+
+Hex Code
+
+Command to LCD Instruction Register
+
+0F
+
+LCD ON, cursor ON
+
+01
+
+Clear display screen
+
+02
+
+Return home
+
+04
+
+Decrement cursor (shift cursor to left)
+
+06
+
+Increment cursor (shift cursor to right)
+
+05
+
+Shift display right
+
+07
+
+Shift display left
+
+0E
+
+Display ON, cursor blinking
+
+80
+
+Force cursor to beginning of first line
+
+C0
+
+Force cursor to beginning of second line
+
+38
+
+2 lines and 5×7 matrix
+
+83
+
+Cursor line 1 position 3
+
+3C
+
+Activate second line
+
+08
+
+Display OFF, cursor OFF
+
+C1
+
+Jump to second line, position 1
+
+OC
+
+Display ON, cursor OFF
+
+C1
+
+Jump to second line, position 1
+
+C2
+
+Jump to second line, position 2
+ 
+## Procedure:
+ 1. click on STM 32 CUBE IDE, the following screen will appear 
+ 2. click on FILE, click on new stm 32 project 
+ 3. select the target to be programmed  as shown below and click on next 
+ 4.select the program name 
+ 5. corresponding ioc file will be generated automatically 
+ 6.select the appropriate pins as gipo, in or out, USART or required options and configure 
+ 7.click on cntrl+S , automaticall C program will be generated 
+ 8. edit the program and as per required 
+ 9. Add necessary library files of LCD 16x2 , write the program and use project and build  
+10. once the project is bulild 
+11. click on debug option 
+12. Creating Proteus project and running the simulation
+We are now at the last part of step by step guide on how to simulate STM32 project in Proteus.
+13. Create a new Proteus project and place STM32F40xx i.e. the same MCU for which the project was created in STM32Cube IDE. 
+after creation of the circuit as per requirement
+14. Double click on the the MCU part to open settings. Next to the Program File option, give full path to the Hex file generated using STM32Cube IDE. Then set the external crystal frequency to 8M (i.e. 8 MHz). Click OK to save the changes.
+15. click on debug and simulate using simulation
+
+## STM 32 CUBE PROGRAM :
+ c
+#include "main.h"
+#include <stdbool.h>
+#include "lcd.h"
+
+bool col1,col2,col3,col4;
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+void key();
 
 
-If the top of this image represents the state of the game I see when it is my turn, then I have some choices to make, there are three places I can play, one of which clearly results in me wining and earning the 10 points. If I don't make that move, O could very easily win. And I don't want O to win, so my goal here, as the first player, should be to pick the maximum scoring move.
+int main(void)
+{
 
-But What About O?
-What do we know about O? Well we should assume that O is also playing to win this game, but relative to us, the first player, O wants obviously wants to chose the move that results in the worst score for us, it wants to pick a move that would minimize our ultimate score. Let's look at things from O's perspective, starting with the two other game states from above in which we don't immediately win:
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
 
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/029b1a70-e92e-46c0-9a32-d6aea98ecd9d)
+  while (1)
+  {
+      key();
+  }
 
-The choice is clear, O would pick any of the moves that result in a score of -10.
+}
 
-Describing Minimax
-The key to the Minimax algorithm is a back and forth between the two players, where the player whose "turn it is" desires to pick the move with the maximum score. In turn, the scores for each of the available moves are determined by the opposing player deciding which of its available moves has the minimum score. And the scores for the opposing players moves are again determined by the turn-taking player trying to maximize its score and so on all the way down the move tree to an end state.
+void key()
+{
+	Lcd_PortType ports[] = {GPIOA,GPIOA,GPIOA,GPIOA};
+	Lcd_PinType pins[] ={GPIO_PIN_3,GPIO_PIN_2,GPIO_PIN_1,GPIO_PIN_0};
+	Lcd_HandleTypeDef lcd;
+	lcd = Lcd_create(ports,pins,GPIOB,GPIO_PIN_0,GPIOB,GPIO_PIN_1,LCD_4_BIT_MODE);
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_1,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_2,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_3,GPIO_PIN_SET);
 
-A description for the algorithm, assuming X is the "turn taking player," would look something like:
-
-If the game is over, return the score from X's perspective.
-Otherwise get a list of new game states for every possible move
-Create a scores list
-For each of these states add the minimax result of that state to the scores list
-If it's X's turn, return the maximum score from the scores list
-If it's O's turn, return the minimum score from the scores list
-You'll notice that this algorithm is recursive, it flips back and forth between the players until a final score is found.
-
-Let's walk through the algorithm's execution with the full move tree, and show why, algorithmically, the instant winning move will be picked:
-
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/12b82542-54fb-47e7-8f76-b75fddc40f92)
-<ul>
-<li>It's X's turn in state 1. X generates the states 2, 3, and 4 and calls minimax on those states.</li>
-<li>State 2 pushes the score of +10 to state 1's score list, because the game is in an end state.</li>
-<li>State 3 and 4 are not in end states, so 3 generates states 5 and 6 and calls minimax on them, while state 4 generates states 7 and 8 and calls minimax on them.</li>
-<li>State 5 pushes a score of -10 onto state 3's score list, while the same happens for state 7 which pushes a score of -10 onto state 4's score list.</li>
-<li>State 6 and 8 generate the only available moves, which are end states, and so both of them add the score of +10 to the move lists of states 3 and 4.</li>
-<li>Because it is O's turn in both state 3 and 4, O will seek to find the minimum score, and given the choice between -10 and +10, both states 3 and 4 will yield -10.</li>
-<li>>Finally the score list for states 2, 3, and 4 are populated with +10, -10 and -10 respectively, and state 1 seeking to maximize the score will chose the winning move with score +10, state 2.</li
-</ul>
-##A Coded Version of Minimax Hopefully by now you have a rough sense of how th e minimax algorithm determines the best move to play. Let's examine my implementation of the algorithm to solidify the understanding:
-
-Here is the function for scoring the game:
-
-# @player is the turn taking player
-def score(game)
-    if game.win?(@player)
-        return 10
-    elsif game.win?(@opponent)
-        return -10
-    else
-        return 0
-    end
-end
-Simple enough, return +10 if the current player wins the game, -10 if the other player wins and 0 for a draw. You will note that who the player is doesn't matter. X or O is irrelevant, only who's turn it happens to be.
-
-And now the actual minimax algorithm; note that in this implementation a choice or move is simply a row / column address on the board, for example [0,2] is the top right square on a 3x3 board.
-
-def minimax(game)
-    return score(game) if game.over?
-    scores = [] # an array of scores
-    moves = []  # an array of moves
-
-    # Populate the scores array, recursing as needed
-    game.get_available_moves.each do |move|
-        possible_game = game.get_new_state(move)
-        scores.push minimax(possible_game)
-        moves.push move
-    end
-
-    # Do the min or the max calculation
-    if game.active_turn == @player
-        # This is the max calculation
-        max_score_index = scores.each_with_index.max[1]
-        @choice = moves[max_score_index]
-        return scores[max_score_index]
-    else
-        # This is the min calculation
-        min_score_index = scores.each_with_index.min[1]
-        @choice = moves[min_score_index]
-        return scores[min_score_index]
-    end
-end
-
-## Program:
+	col1 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_4);
+	col2 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_5);
+	col3 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_6);
+	col4 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_7);
+	Lcd_cursor(&lcd,0,1);
+	if(!col1)
+	{
+		Lcd_string(&lcd,"key 7\n");
+		HAL_Delay(300);
+	}
+	else if(!col2)
+	{
+		Lcd_string(&lcd,"key 8\n");
+		HAL_Delay(300);
+	}
+	else if(!col3)
+	{
+		Lcd_string(&lcd,"key 9\n");
+		HAL_Delay(300);
+	}
+	else if(!col4)
+	{
+		Lcd_string(&lcd,"key %\n");
+		HAL_Delay(300);
+	}
 
 
-import time
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_1,GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_2,GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_3,GPIO_PIN_SET);
 
-class Game:
-    def __init__(self):
-        self.initialize_game()
+		col1 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_4);
+		col2 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_5);
+		col3 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_6);
+		col4 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_7);
+		Lcd_cursor(&lcd,0,1);
+		if(!col1)
+		{
+			Lcd_string(&lcd,"key 4\n");
+			HAL_Delay(300);
+		}
+		else if(!col2)
+		{
+			Lcd_string(&lcd,"key 5\n");
+			HAL_Delay(300);
+		}
+		else if(!col3)
+		{
+			Lcd_string(&lcd,"key 6\n");
+			HAL_Delay(300);
+		}
+		else if(!col4)
+		{
+			Lcd_string(&lcd,"key *\n");
+			HAL_Delay(300);
+		}
 
-    def initialize_game(self):
-        self.current_state = [['.','.','.'],
-                              ['.','.','.'],
-                              ['.','.','.']]
 
-        # Player X always plays first
-        self.player_turn = 'X'
+		HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_1,GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_2,GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_3,GPIO_PIN_SET);
 
-    def draw_board(self):
-        for i in range(0, 3):
-            for j in range(0, 3):
-                print('{}|'.format(self.current_state[i][j]), end=" ")
-            print()
-        print()
-    def is_valid(self, px, py):
-        if px < 0 or px > 2 or py < 0 or py > 2:
-            return False
-        elif self.current_state[px][py] != '.':
-            return False
-        else:
-            return True
-    def is_end(self):
-    # Vertical win
-        for i in range(0, 3):
-            if (self.current_state[0][i] != '.' and
-                self.current_state[0][i] == self.current_state[1][i] and
-                self.current_state[1][i] == self.current_state[2][i]):
-                return self.current_state[0][i]
+			col1 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_4);
+			col2 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_5);
+			col3 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_6);
+			col4 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_7);
+			Lcd_cursor(&lcd,0,1);
+			if(!col1)
+			{
+				Lcd_string(&lcd,"key 1\n");
+				HAL_Delay(300);
+			}
+			else if(!col2)
+			{
+				Lcd_string(&lcd,"key 2\n");
+				HAL_Delay(300);
+			}
+			else if(!col3)
+			{
+				Lcd_string(&lcd,"key 3\n");
+				HAL_Delay(300);
+			}
+			else if(!col4)
+			{
+				Lcd_string(&lcd,"key -\n");
+				HAL_Delay(300);
+			}
 
-        # Horizontal win
-        for i in range(0, 3):
-            if (self.current_state[i] == ['X', 'X', 'X']):
-                return 'X'
-            elif (self.current_state[i] == ['O', 'O', 'O']):
-                return 'O'
+			HAL_GPIO_WritePin(GPIOC,GPIO_PIN_0,GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_1,GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_2,GPIO_PIN_SET);
+				HAL_GPIO_WritePin(GPIOC,GPIO_PIN_3,GPIO_PIN_RESET);
 
-    # Main diagonal win
-        if (self.current_state[0][0] != '.' and
-            self.current_state[0][0] == self.current_state[1][1] and
-            self.current_state[0][0] == self.current_state[2][2]):
-            return self.current_state[0][0]
+				col1 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_4);
+				col2 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_5);
+				col3 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_6);
+				col4 = HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_7);
+				Lcd_cursor(&lcd,0,1);
+				if(!col1)
+				{
+					Lcd_string(&lcd,"key ON/c\n");
+					HAL_Delay(300);
+				}
+				else if(!col2)
+				{
+					Lcd_string(&lcd,"key 0\n");
+					HAL_Delay(300);
+				}
+				else if(!col3)
+				{
+					Lcd_string(&lcd,"key =\n");
+					HAL_Delay(300);
+				}
+				else if(!col4)
+				{
+					Lcd_string(&lcd,"key +\n");
+					HAL_Delay(300);
+				}
 
-    # Second diagonal win
-        if (self.current_state[0][2] != '.' and
-            self.current_state[0][2] == self.current_state[1][1] and
-            self.current_state[0][2] == self.current_state[2][0]):
-            return self.current_state[0][2]
+}
 
-    # Is the whole board full?
-        for i in range(0, 3):
-            for j in range(0, 3):
-            # There's an empty field, we continue the game
-                if (self.current_state[i][j] == '.'):
-                    return None
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-    # It's a tie!
-        return '.'
-    def max(self):
 
-        # Possible values for maxv are:
-        # -1 - loss
-        # 0  - a tie
-        # 1  - win
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
 
-        # We're initially setting it to -2 as worse than the worst case:
-        maxv = -2
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
 
-        px = None
-        py = None
 
-        result = self.is_end()
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-        # If the game came to an end, the function needs to return
-        # the evaluation function of the end. That can be:
-        # -1 - loss
-        # 0  - a tie
-        # 1  - win
-        if result == 'X':
-            return (-1, 0, 0)
-        elif result == 'O':
-            return (1, 0, 0)
-        elif result == '.':
-            return (0, 0, 0)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 
-        for i in range(0, 3):
-            for j in range(0, 3):
-                if self.current_state[i][j] == '.':
-                    # On the empty field player 'O' makes a move and calls Min
-                    # That's one branch of the game tree.
-                    self.current_state[i][j] = 'O'
-                    (m, min_i, min_j) = self.min()
-                    # Fixing the maxv value if needed
-                    if m > maxv:
-                        maxv = m
-                        px = i
-                        py = j
-                    # Setting back the field to empty
-                    self.current_state[i][j] = '.'
-        return (maxv, px, py)
 
-    def min(self):
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-        # Possible values for minv are:
-        # -1 - win
-        # 0  - a tie
-        # 1  - loss
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
 
-        # We're initially setting it to 2 as worse than the worst case:
-        minv = 2
 
-        qx = None
-        qy = None
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
 
-        result = self.is_end()
+  HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_RESET);
 
-        if result == 'X':
-            return (-1, 0, 0)
-        elif result == 'O':
-            return (1, 0, 0)
-        elif result == '.':
-            return (0, 0, 0)
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|GPIO_PIN_1, GPIO_PIN_RESET);
 
-        for i in range(0, 3):
-            for j in range(0, 3):
-                if self.current_state[i][j] == '.':
-                    self.current_state[i][j] = 'X'
-                    (m, max_i, max_j) = self.max()
-                    if m < minv:
-                        minv = m
-                        qx = i
-                        qy = j
-                    self.current_state[i][j] = '.'
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-        return (minv, qx, qy)
-    def play(self):
-        while True:
-            self.draw_board()
-            self.result = self.is_end()
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-            # Printing the appropriate message if the game has ended
-            if self.result != None:
-                if self.result == 'X':
-                    print('The winner is X!')
-                elif self.result == 'O':
-                    print('The winner is O!')
-                elif self.result == '.':
-                    print("It's a tie!")
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-                self.initialize_game()
-                return
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-            # If it's player's turn
-            if self.player_turn == 'X':
+}
 
-                while True:
 
-                    start = time.time()
-                    (m, qx, qy) = self.min()
-                    end = time.time()
-                    print('Evaluation time: {}s'.format(round(end - start, 7)))
-                    print('Recommended move: X = {}, Y = {}'.format(qx, qy))
+void Error_Handler(void)
+{
 
-                    px = int(input('Insert the X coordinate: '))
-                    py = int(input('Insert the Y coordinate: '))
+  __disable_irq();
+  while (1)
+  {
+  }
 
-                    (qx, qy) = (px, py)
+}
 
-                    if self.is_valid(px, py):
-                        self.current_state[px][py] = 'X'
-                        self.player_turn = 'O'
-                        break
-                    else:
-                        print('The move is not valid! Try again.')
+#ifdef  USE_FULL_ASSERT
 
-            # If it's AI's turn
-            else:
-                (m, px, py) = self.max()
-                self.current_state[px][py] = 'O'
-                self.player_turn = 'X'
-def main():
-    g = Game()
-    g.play()
+void assert_failed(uint8_t *file, uint32_t line)
+{
 
-if __name__ == "__main__":
-    main()
+}
+#endif
 
-<hr>
-<h2>Sample Input and Output</h2>
 
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/6b668685-8bcc-43c5-b5c2-ddd43f3da84a)
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/8ca1b08a-8312-4ef5-89df-e69b7b2c3fa2)
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/dc06427a-d4ce-43a1-95bd-9acfaefac323)
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/a8a27e2a-6fd4-46a2-afb5-6d27b8556702)
-![image](https://github.com/natsaravanan/19AI405FUNDAMENTALSOFARTIFICIALINTELLIGENCE/assets/87870499/a2acb6a1-ed8e-42e5-8968-fe805e4b0255)
 
-<hr>
-<h2>Result:</h2>
-<p>Thus,Implementation of  Minimax Search Algorithm for a Simple TIC-TAC-TOE game wasa done successfully.</p>
+
+
+## Output screen shots of proteus  :
+
+ ![image](https://github.com/JivanKarthick/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/121165867/bee40415-3896-4528-80bd-fb66b5dc2f33)
+
+
+ 
+ ## CIRCUIT DIAGRAM (EXPORT THE GRAPHICS TO PDF AND ADD THE SCREEN SHOT HERE): 
+ ![image](https://github.com/JivanKarthick/EXPERIMENT--05-INTERFACING-A-4X4-MATRIX-KEYPAD-AND-DISPLAY-THE-OUTPUT-ON-LCD/assets/121165867/2f4dd557-84d5-4ad5-84b6-0708ed416794)
+
+
+ 
+## Result :
+Interfacing a 4x4 keypad with ARM microcontroller are simulated in proteus and the results are verified.
